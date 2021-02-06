@@ -2,6 +2,7 @@
 //
 
 #include <iostream>
+#include <cstring>
 #include "hangman.h"
 using namespace std;
 
@@ -9,19 +10,48 @@ using namespace std;
 
 int main()
 {
+    //initialize variables
     char guessedWord[100] = "trash";
     char correctLetters[6] = "_____";
-    char incorrectLetters[100];
+    char incorrectLetters[100] = {};
     char guessLetter[2];
 
-    while (guessedWord != correctLetters)
+    //introduce the game
+    cout << "Let's play some Hangman!" << endl << endl;
+
+    //loop through this code until the user guesses the word, or runs out of guesses
+    while (strcmp(guessedWord, correctLetters) != 0 && strlen(incorrectLetters) < 6 )
     {
-        cout << " letters left to guess." << endl;
+        
+        //shows instructions for the game, and the gallows
         cout << "Type a letter to guess and press enter: " << endl;
         showGallows(strlen(incorrectLetters));
 
+        //shows the correctly guessed letters in order
+        cout << "Word so far: " << correctLetters << endl;
+
+        //takes user input for a guess
         cin >> guessLetter;
+
+        //will add correct letters to the array and incorrect letters to an array. checks for repeat wrong guesses
+        showSolved(correctLetters, guessLetter, incorrectLetters);
+
+
     }
+
+    //if the user correctly guessed the word, tell them they have won
+    if (strcmp(guessedWord, correctLetters) == 0) {
+
+        cout << "You have won! the word was in fact " << guessedWord << endl;
+
+    }
+    //if the user ran out of guesses, tell them they have lost, and give them the word
+    else {
+
+        cout << "You have lost :( the word was " << guessedWord << endl;
+
+    }
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
