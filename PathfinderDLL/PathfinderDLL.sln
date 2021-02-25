@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PathfinderDLL", "PathfinderDLL\PathfinderDLL.vcxproj", "{EB83C2EB-64B7-4D8F-9C25-B25992DFF60A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Part1UnitTests", "Part1UnitTests\Part1UnitTests.vcxproj", "{71E8AC3F-EF9A-40AD-8C0B-91BEDC8100ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{EB83C2EB-64B7-4D8F-9C25-B25992DFF60A}.Release|x64.Build.0 = Release|x64
 		{EB83C2EB-64B7-4D8F-9C25-B25992DFF60A}.Release|x86.ActiveCfg = Release|Win32
 		{EB83C2EB-64B7-4D8F-9C25-B25992DFF60A}.Release|x86.Build.0 = Release|Win32
+		{71E8AC3F-EF9A-40AD-8C0B-91BEDC8100ED}.Debug|x64.ActiveCfg = Debug|x64
+		{71E8AC3F-EF9A-40AD-8C0B-91BEDC8100ED}.Debug|x64.Build.0 = Debug|x64
+		{71E8AC3F-EF9A-40AD-8C0B-91BEDC8100ED}.Debug|x86.ActiveCfg = Debug|Win32
+		{71E8AC3F-EF9A-40AD-8C0B-91BEDC8100ED}.Debug|x86.Build.0 = Debug|Win32
+		{71E8AC3F-EF9A-40AD-8C0B-91BEDC8100ED}.Release|x64.ActiveCfg = Release|x64
+		{71E8AC3F-EF9A-40AD-8C0B-91BEDC8100ED}.Release|x64.Build.0 = Release|x64
+		{71E8AC3F-EF9A-40AD-8C0B-91BEDC8100ED}.Release|x86.ActiveCfg = Release|Win32
+		{71E8AC3F-EF9A-40AD-8C0B-91BEDC8100ED}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

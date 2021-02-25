@@ -1,6 +1,2 @@
-﻿  pch.cpp
-  dllmain.cpp
-  Functions.cpp
-  Generating Code...
-     Creating library C:\Users\callc\source\repos\IGME209-02\PathfinderDLL\Debug\PathfinderDLL.lib and object C:\Users\callc\source\repos\IGME209-02\PathfinderDLL\Debug\PathfinderDLL.exp
+﻿  Functions.cpp
   PathfinderDLL.vcxproj -> C:\Users\callc\source\repos\IGME209-02\PathfinderDLL\Debug\PathfinderDLL.dll
