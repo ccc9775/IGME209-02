@@ -7,7 +7,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 __declspec(dllimport) char* GetTeam();
 __declspec(dllimport) void SetMaze(const int** data, int width, int height);
 __declspec(dllimport) int** GetMaze(int& width, int& height);
-//__declspec(dllimport) void GetNextPosition(int& xPos, int& yPos);
+__declspec(dllimport) void GetNextPosition(int& xPos, int& yPos);
 __declspec(dllimport) void SetStart(int xPos, int yPos);
 __declspec(dllimport) void GetStart(int& xPos, int& yPos);
 __declspec(dllimport) void SetEnd(int xPos, int yPos);
@@ -50,6 +50,20 @@ namespace Part1UnitTests
 			catch (const std::exception&) {
 				Assert::Fail(L"get maze threw an exception");
 			}
+		}
+
+		TEST_METHOD(TestGetNextPosition) {
+
+			int xPos = 5;
+			int yPos = 2;
+
+			try {
+				GetMaze(xPos, yPos);
+			}
+			catch (const std::exception&) {
+				Assert::Fail(L"get next position threw an exception");
+			}
+
 		}
 
 		TEST_METHOD(TestSetStart)
@@ -97,5 +111,12 @@ namespace Part1UnitTests
 				Assert::Fail(L"get end threw an exception");
 			}
 		}
+
+		/*TEST_METHOD(TestFail)
+		{
+
+			Assert::Fail();
+
+		}*/
 	};
 }

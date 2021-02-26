@@ -3,6 +3,7 @@
 
 using namespace std;
 
+//Initialize variables
 int startX;
 int startY;
 int endX;
@@ -15,10 +16,12 @@ const int** mazeData;
 int mazeWidth;
 int mazeHeight;
 
+//return names of team members when called
 __declspec(dllexport) char* GetTeam() {
 	return (char*)"Chase Call";
 }
 
+//save the width, height, and data of the maze when called
 __declspec(dllexport) void SetMaze(const int** data, int width, int height) {
 
 	mazeData = data;
@@ -27,6 +30,7 @@ __declspec(dllexport) void SetMaze(const int** data, int width, int height) {
 
 }
 
+//set the height, width, and data form the DLL for the maze when called
 __declspec(dllexport) int** GetMaze(int& width, int& height) {
 
 	width = mazeWidth;
@@ -35,14 +39,16 @@ __declspec(dllexport) int** GetMaze(int& width, int& height) {
 
 }
 
+//return the next position when called
 __declspec(dllexport) void GetNextPosition(int& xPos, int& yPos) {
 	
-	xPos = xList[currentX + 1];
-	yPos = yList[currentY + 1];
+	xPos = xList[currentX];
+	yPos = yList[currentY];
 
 
 }
 
+//save the x and y start position when called
 __declspec(dllexport) void SetStart(int xPos, int yPos) {
 
 	startX = xPos;
@@ -50,6 +56,7 @@ __declspec(dllexport) void SetStart(int xPos, int yPos) {
 
 }
 
+//set the x and y position of the start when called
 __declspec(dllexport) void GetStart(int& xPos, int& yPos) {
 
 	if (startX == NULL && startY == NULL) {
@@ -64,6 +71,7 @@ __declspec(dllexport) void GetStart(int& xPos, int& yPos) {
 
 }
 
+//save the x and y end position when called
 __declspec(dllexport) void SetEnd(int xPos, int yPos) {
 
 	endX = xPos;
@@ -71,6 +79,7 @@ __declspec(dllexport) void SetEnd(int xPos, int yPos) {
 
 }
 
+//set the x and y end position when called
 __declspec(dllexport) void GetEnd(int& xPos, int& yPos) {
 
 	if (endX == NULL && endY == NULL) {
