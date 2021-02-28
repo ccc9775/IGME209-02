@@ -28,7 +28,7 @@ int main()
 	//set the initial target
 	targetX = 0;
 	targetY = 3;
-	//next target is -4,3
+	//next target is -4,3. can go throught 10 targets before ending
 
 	//add welcome and instructions
 	cout << "Welcome to Gravity Snake!" << endl;
