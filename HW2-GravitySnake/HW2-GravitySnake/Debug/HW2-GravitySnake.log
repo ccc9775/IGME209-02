@@ -1,0 +1,4 @@
+﻿  snake.cpp
+C:\Users\callc\source\repos\IGME209-02\HW2-GravitySnake\HW2-GravitySnake\snake.cpp(39,23): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\callc\source\repos\IGME209-02\HW2-GravitySnake\HW2-GravitySnake\snake.cpp(40,23): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  HW2-GravitySnake.vcxproj -> C:\Users\callc\source\repos\IGME209-02\HW2-GravitySnake\Debug\HW2-GravitySnake.exe
