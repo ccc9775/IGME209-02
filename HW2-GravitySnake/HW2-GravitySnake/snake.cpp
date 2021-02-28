@@ -21,28 +21,28 @@ void display(b2Vec2& position, float& angle) {
 }
 
 //add an appropriate force to the specified direction based off of the user's button press
-void applyForces(char input, b2Body* snake) {
+void applyForces(char input) {
 
 	if (input == 119) {
-		snake->ApplyForceToCenter(b2Vec2(0, 3000), true);
+		body->ApplyForceToCenter(b2Vec2(0, 3000), true);
 	}
 	else if (input == 97) {
-		snake->ApplyForceToCenter(b2Vec2(-100, 0), true);
+		body->ApplyForceToCenter(b2Vec2(-100, 0), true);
 	}
 	else if (input == 115) {
-		snake->ApplyForceToCenter(b2Vec2(0, -300), true);
+		body->ApplyForceToCenter(b2Vec2(0, -300), true);
 	}
 	else if (input == 100) {
-		snake->ApplyForceToCenter(b2Vec2(100, 0), true);
+		body->ApplyForceToCenter(b2Vec2(100, 0), true);
 	}
 
 }
 
-//move the target to a random location between -5 and 5 in both the x and y direction
+//move the target to a random location between -5 and 5 in the x and 1 and 5 in the y direction
 void moveTarget(float& xPos, float& yPos) {
 
 	xPos = (rand() % 10) -5;
-	yPos = (rand() % 10) -5;
+	yPos = (rand() % 5) +1;
 
 }
 

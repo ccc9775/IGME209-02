@@ -28,6 +28,7 @@ int main()
 	//set the initial target
 	targetX = 0;
 	targetY = 3;
+	//next target is -4,3
 
 	//add welcome and instructions
 	cout << "Welcome to Gravity Snake!" << endl;
@@ -62,7 +63,7 @@ int main()
 	body->CreateFixture(&fixtureDef);
 
 	//while the max number of targets hasn't been hit yet
-	while (numTargetsHit != 2)
+	while (numTargetsHit != 10)
 	{
 		//update position and world tick
 		update(world);
@@ -88,7 +89,7 @@ int main()
 			}
 			//if any other key is pressed, call applyForces
 			else {
-				applyForces(input, body);
+				applyForces(input);
 			}
 		}
 
@@ -109,13 +110,4 @@ int main()
 
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
