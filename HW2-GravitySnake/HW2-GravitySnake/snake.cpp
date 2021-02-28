@@ -17,7 +17,8 @@ void update(b2World& world) {
 
 //print out the position and angle of the snake to the console
 void display(b2Vec2& position, float& angle) {
-	printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
+	
+	printf("Target %4.2f %4.2f --> Snake %4.2f %4.2f %4.2f\n", targetX, targetY, position.x, position.y, angle);
 }
 
 //add an appropriate force to the specified direction based off of the user's button press
