@@ -38,17 +38,19 @@ int main()
 	cout << "How to Play:" << endl;
 	cout << "WASD to move the snake, try to hit as many targets as possible. Press Esc to end the game early, q to pause, and Space to reverse gravity." << endl;
 	cout << "How many targets do you want to play with?" << endl;
+	//take player input and call setup targets function
 	cin >> numTargets;
 	setupTargets(numTargets);
 
 
-
+	//initialize window
 	sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
 
-
+	//set up snake shape
 	sf::CircleShape snake(10.0f);
 	snake.setFillColor(sf::Color::White);
 
+	//set up target shape
 	sf::RectangleShape target(sf::Vector2f(10.0f, 10.0f));
 	target.setFillColor(sf::Color::Green);
 
@@ -77,7 +79,7 @@ int main()
 	fixtureDef.friction = 0.3f;
 	body->CreateFixture(&fixtureDef);
 
-
+	//while the program is running and the window is open
 	while (window.isOpen()) {
 
 		sf::Event event;
@@ -99,17 +101,20 @@ int main()
 		display(position, angle);
 		processInput();
 
+		//if the snake is intersecting with the target, call the next target
 		if (position.y <= currentLocation->y + 7 && position.y >= currentLocation->y - 7 && position.x <= currentLocation->x + 7 && position.x >= currentLocation->x - 7) {
 			selectNextTarget();
 			numTargetsHit++;
 		}
 
+		//set the position of the snake and target shape to their object coordinates
 		snake.setPosition(position.x, position.y);
 		target.setPosition(currentLocation->x, currentLocation->y);
 
+		//set the background of the window to black
 		window.clear(sf::Color::Black);
 
-
+		//draw the target and snake shape
 		window.draw(snake);
 		window.draw(target);
 

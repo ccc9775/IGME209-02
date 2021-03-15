@@ -54,6 +54,7 @@ void moveTarget(float& xPos, float& yPos) {
 
 }*/
 
+//call the proper functions based off of user input
 void processInput() {
 	Key inputBody;
 
@@ -90,6 +91,7 @@ void processInput() {
 
 }
 
+//apply forces to the correct direction on the snake
 void ApplyForceUp(b2Body& player) {
 	body->ApplyForceToCenter(b2Vec2(0, -100), true);
 }
@@ -102,14 +104,19 @@ void ApplyForceLeft(b2Body& player) {
 void ApplyForceRight(b2Body& player) {
 	body->ApplyForceToCenter(b2Vec2(10, 0), true);
 }
+
+//stop the linear velocity of the snake
 void StopMoving(b2Body& player) {
 	body->SetLinearVelocity(b2Vec2(0, 0));
 }
+
+//reverse the gravity of the world
 void ReverseGravity(b2World& world) {
 	b2Vec2 newGrav = world.GetGravity();
 	world.SetGravity(-newGrav);
 }
 
+//add random target locations to the array
 void setupTargets(int cnt) {
 
 	TargetLocations[cnt];
@@ -120,6 +127,7 @@ void setupTargets(int cnt) {
 	currentLocation = &TargetLocations[0];
 }
 
+//call the next position of the target array
 bool selectNextTarget() {
 	currentLocation++;
 
