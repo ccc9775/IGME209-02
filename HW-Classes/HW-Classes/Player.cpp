@@ -29,3 +29,6 @@ void Player::printPlayer() {
 	cout << "Intellect: " << intellect << endl;
 
 }
+
+//player destructor
+Player::~Player() { std::cout << "Destroying player object" << endl; }

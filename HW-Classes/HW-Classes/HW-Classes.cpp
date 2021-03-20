@@ -8,30 +8,39 @@ using namespace std;
 
 int main()
 {
-    //calling the class in main
-    Player();
+    //say the name of the battle
+    cout << "Welcome to the Tournament of Champions!" << endl;
 
-    //initializing player objects
-    Player firstPlayer;
-    Player secondPlayer((char*)"Named", 7, 3, 12);
-    Player* thirdPlayer = new Player();
-    Player* fourthPlayer = new Player((char*)"Unnamed", 15, 8, 2);
+    //create the ten battlers
+    Player* battlers[10];
 
-    Fighter firstFighter;
-    Fighter* secondFighter = new Fighter((char*)"Fred", 20, 15, 3, (char*)"Riposte");
+    //create a player or fighter object for each battler
+    for (int i = 0; i < 10; i++) {
 
-    //printing player objects to the console
-    firstPlayer.printPlayer();
-    secondPlayer.printPlayer();
-    thirdPlayer->printPlayer();
-    fourthPlayer->printPlayer();
-    firstFighter.printFighter();
-    secondFighter->printFighter();
+        int playerType = (rand() % 2 + 1);
 
-    //deleting players from heap
-    delete thirdPlayer;
-    delete fourthPlayer;
-    delete secondFighter;
+        if (playerType == 1) {
+            battlers[i] = new Player((char*)"player ", 10, 10, 10);
+        }
+        else if (playerType == 2) {
+            battlers[i] = new Fighter((char*)"player ", 10, 10, 10, (char*)"Big Hit");
+        }
+
+    }
+
+    
+    //loop through each battler
+    for (int i = 1; i < 10; i++) {
+        battlers[0]->Attack(battlers[i]);
+        battlers[i] = nullptr;
+    }
+    
+    //declare the winner
+    cout << battlers[0]->getName() << " is the winner!" << endl;
+    //delete the final battler
+    delete battlers[0];
+
+
 }
 
 

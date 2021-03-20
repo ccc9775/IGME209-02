@@ -1,4 +1,8 @@
 #pragma once
+#include <iostream>
+using namespace std;
+
+
 class Player
 {
 
@@ -7,7 +11,7 @@ public:
 	Player();
 	Player(char* name, int strength, int speed, int intellect);
 	void printPlayer();
-	~Player() { std::cout << "Destroying player object" << endl; }
+	~Player();
 
 	virtual void Attack(Player* enemy) {
 

@@ -8,7 +8,12 @@ class Fighter :
         Fighter();
         Fighter(char* name, int strength, int speed, int intellect, char* skill);
         void printFighter();
-        ~Fighter() { std::cout << "Destroying fighter object" << endl; }
+        ~Fighter();
+        void Attack(Player* enemy) override {
+
+            cout << Player().getName() << " attacks " << enemy->getName() << " with a " << this->skill << endl;
+
+        }
 
     private: 
         char* skill;
