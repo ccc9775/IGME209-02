@@ -2,19 +2,51 @@
 //
 
 #include <iostream>
+#include <fstream>
+using namespace std;
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    
+   //output for the text file
+    ofstream outputFile;
+
+    outputFile.open("text.txt");
+
+    if (outputFile.is_open()) {
+        //print this text to the file, and close the file
+        outputFile << "some text for the PE \n";
+        outputFile << "Here's a second line of text \n";
+        outputFile.close();
+
+    }
+
+    //read from the text file
+    ifstream inputFile;
+
+    inputFile.open("text.txt", ios::binary);
+
+
+    if (inputFile.is_open()) {
+        //read all the content fromt the file and return the length
+        inputFile.seekg(0, ios::end);
+        int fileLength = (int)inputFile.tellg();
+        inputFile.seekg(0, ios::beg);
+
+        char* text = new char[fileLength + 1];
+
+        //read the file, and input all content of the file to an array
+        inputFile.read(text, fileLength);
+        text[fileLength] = 0;
+
+        //print the text in the array to the console
+        printf(text);
+        //close the file
+        inputFile.close();
+    }
+
+
+    
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
