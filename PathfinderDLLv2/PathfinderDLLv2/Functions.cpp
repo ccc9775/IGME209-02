@@ -10,8 +10,7 @@ int endX;
 int endY;
 int xList[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 int yList[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-int currentX = xList[0];
-int currentY = yList[0];
+int currentPos = 0;
 const int** mazeData;
 int mazeWidth;
 int mazeHeight;
@@ -22,74 +21,114 @@ __declspec(dllexport) char* GetTeam() {
 }
 
 //save the width, height, and data of the maze when called
-__declspec(dllexport) void SetMaze(const int** data, int width, int height) {
+__declspec(dllexport) bool SetMaze(const int** data, int width, int height) {
 
-	mazeData = data;
-	mazeHeight = height;
-	mazeWidth = width;
-
+	if (height <= 0 || width <= 0) {
+		return false;
+	}
+	else {
+		mazeData = data;
+		mazeHeight = height;
+		mazeWidth = width;
+		return true;
+	}
 }
 
 //set the height, width, and data form the DLL for the maze when called
 __declspec(dllexport) int** GetMaze(int& width, int& height) {
-
-	width = mazeWidth;
-	height = mazeHeight;
-	return (int**)mazeData;
-
+	if (SetMaze == false) {
+		return nullptr;
+	}
+	else {
+		width = mazeWidth;
+		height = mazeHeight;
+		return (int**)mazeData;
+	}
 }
 
 //return the next position when called
 __declspec(dllexport) void GetNextPosition(int& xPos, int& yPos) {
 	
-	xPos = xList[currentX];
-	yPos = yList[currentY];
+	xPos = xList[currentPos];
+	yPos = yList[currentPos];
+	currentPos++;
+	currentPos++;
 
 
 }
 
 //save the x and y start position when called
-__declspec(dllexport) void SetStart(int xPos, int yPos) {
+__declspec(dllexport) bool SetStart(int xPos, int yPos) {
 
-	startX = xPos;
-	startY = yPos;
-
+	if (xPos < 0 || yPos < 0) {
+		return false;
+	}
+	else {
+		startX = xPos;
+		startY = yPos;
+		return true;
+	}
 }
 
 //set the x and y position of the start when called
-__declspec(dllexport) void GetStart(int& xPos, int& yPos) {
+__declspec(dllexport) bool GetStart(int& xPos, int& yPos) {
 
-	if (startX == NULL && startY == NULL) {
-		xPos = -1;
-		yPos = -1;
+	if (SetStart == false) {
+		return false;
 	}
-	else
-	{
-		xPos = startX;
-		yPos = startY;
-	}
+	else {
 
+		if (startX == NULL && startY == NULL) {
+			xPos = -1;
+			yPos = -1;
+			return false;
+		}
+		else
+		{
+			xPos = startX;
+			yPos = startY;
+			return true;
+		}
+	}
 }
 
 //save the x and y end position when called
-__declspec(dllexport) void SetEnd(int xPos, int yPos) {
+__declspec(dllexport) bool SetEnd(int xPos, int yPos) {
 
-	endX = xPos;
-	endY = yPos;
-
+	if (xPos < 0 || yPos < 0) {
+		return false;
+	}
+	else {
+		endX = xPos;
+		endY = yPos;
+		return true;
+	}
 }
 
 //set the x and y end position when called
-__declspec(dllexport) void GetEnd(int& xPos, int& yPos) {
+__declspec(dllexport) bool GetEnd(int& xPos, int& yPos) {
 
-	if (endX == NULL && endY == NULL) {
-		xPos = -1;
-		yPos = -1;
+	if (SetEnd == false) {
+		return false;
 	}
-	else
-	{
-		xPos = endX;
-		yPos = endY;
+	else {
+		if (endX == NULL && endY == NULL) {
+			xPos = -1;
+			yPos = -1;
+			return false;
+		}
+		else
+		{
+			xPos = endX;
+			yPos = endY;
+			return true;
+		}
 	}
+}
+
+__declspec(dllexport) bool Restart() {
+
+	currentPos = 0;
+	return true;
 
 }
