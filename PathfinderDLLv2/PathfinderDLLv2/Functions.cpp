@@ -1,17 +1,26 @@
 #include "pch.h"
+#include <stdlib.h>
+#include "Graph.h"
 #include <iostream>
 
 using namespace std;
+
+struct Point {
+	int x;
+	int y;
+};
 
 //Initialize variables
 int startX;
 int startY;
 int endX;
 int endY;
-int xList[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-int yList[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+int xList[];
+int yList[];
+vector<Point> step;
 int currentPos = 0;
-const int** mazeData;
+int** mazeData;
+Graph graph;
 int mazeWidth;
 int mazeHeight;
 
@@ -27,9 +36,20 @@ __declspec(dllexport) bool SetMaze(const int** data, int width, int height) {
 		return false;
 	}
 	else {
-		mazeData = data;
 		mazeHeight = height;
 		mazeWidth = width;
+		currentPos = 0;
+
+		mazeData = new int* [width];
+		for (size_t i = 0; i < width; i++) {
+
+			mazeData[i] = new int[height];
+			for (size_t j = 0; j < height; j++) {
+				mazeData[i][j] = data[i][j];
+			}
+
+		}
+
 		return true;
 	}
 }
@@ -42,19 +62,113 @@ __declspec(dllexport) int** GetMaze(int& width, int& height) {
 	else {
 		width = mazeWidth;
 		height = mazeHeight;
-		return (int**)mazeData;
+		return mazeData;
 	}
 }
 
 //return the next position when called
-__declspec(dllexport) void GetNextPosition(int& xPos, int& yPos) {
+__declspec(dllexport) bool GetNextPosition(int& xPos, int& yPos) {
 	
+	for (size_t i = 0; i < mazeWidth; i++) {
+
+		for (size_t j = 0; j < mazeHeight; j++) {
+		
+			if (mazeData[i][j] != 1) {
+
+				Vertex* tempNode = new Vertex;
+				tempNode->xPos = i;
+				tempNode->yPos = j;
+				tempNode->heuristic = abs((int)(endX - 1)) + abs((int)(endY - 1));
+
+				if (mazeData[i][j] == 0) {
+					tempNode->weight = 1;
+				}
+				else {
+					tempNode->weight = mazeData[i][j];
+				}
+
+				tempNode->lowestCost = INT_MAX;
+				graph.AddNode(tempNode);
+
+			}
+
+		}
+
+	}
+
+
+	for (size_t i = 0; i < mazeWidth; i++) {
+
+		for (size_t j = 0; j < mazeHeight; j++) {
+
+			if (mazeData[i][j] != 1) {
+
+				int firstPoint = graph.getNodeIndex(i, j);
+
+				//4 regular directions
+				if (i - 1 >= 0 && mazeData[i - 1][j] != 1) {
+					int secondPoint = graph.getNodeIndex(i - 1, j);
+					graph.AddEdge(firstPoint, secondPoint, graph.getNode(i-1, j)->weight);
+				}
+				if (i + 1 >= 0 && mazeData[i + 1][j] != 1) {
+					int secondPoint = graph.getNodeIndex(i + 1, j);
+					graph.AddEdge(firstPoint, secondPoint, graph.getNode(i + 1, j)->weight);
+				}
+				if (i - 1 >= 0 && mazeData[i][j - 1] != 1) {
+					int secondPoint = graph.getNodeIndex(i, j - 1);
+					graph.AddEdge(firstPoint, secondPoint, graph.getNode(i, j - 1)->weight);
+				}
+				if (i - 1 >= 0 && mazeData[i][j + 1] != 1) {
+					int secondPoint = graph.getNodeIndex(i, j + 1);
+					graph.AddEdge(firstPoint, secondPoint, graph.getNode(i, j + 1)->weight);
+				}
+
+				//4 diagonal directions
+				if (i - 1 >= 0 && mazeData[i + 1][j + 1] != 1) {
+					int secondPoint = graph.getNodeIndex(i + 1, j + 1);
+					graph.AddEdge(firstPoint, secondPoint, graph.getNode(i + 1, j + 1)->weight);
+				}
+				if (i - 1 >= 0 && mazeData[i - 1][j + 1] != 1) {
+					int secondPoint = graph.getNodeIndex(i - 1, j + 1);
+					graph.AddEdge(firstPoint, secondPoint, graph.getNode(i - 1, j + 1)->weight);
+				}
+				if (i - 1 >= 0 && mazeData[i + 1][j - 1] != 1) {
+					int secondPoint = graph.getNodeIndex(i + 1, j - 1);
+					graph.AddEdge(firstPoint, secondPoint, graph.getNode(i + 1, j - 1)->weight);
+				}
+				if (i - 1 >= 0 && mazeData[i - 1][j - 1] != 1) {
+					int secondPoint = graph.getNodeIndex(i - 1, j - 1);
+					graph.AddEdge(firstPoint, secondPoint, graph.getNode(i - 1, j - 1)->weight);
+				}
+
+			}
+
+		}
+
+	}
+	graph.printMatrix();
+	graph.setStart(startX, startY);
+	graph.setGoal(endX, endY);
+
+	graph.aStar();
+
+	Vertex* goalVert = graph.goal;
+	while (goalVert != nullptr) {
+
+		Point stp;
+		stp.x = goalVert->xPos;
+		stp.y = goalVert->yPos;
+		step.insert(step.begin(), stp);
+		goalVert = goalVert->prevVert;
+
+	}
+
 	xPos = xList[currentPos];
 	yPos = yList[currentPos];
 	currentPos++;
 	currentPos++;
 
-
+	return true;
 }
 
 //save the x and y start position when called
