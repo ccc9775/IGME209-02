@@ -1,18 +1,18 @@
-#include <iostream>
 #include "pch.h"
 #include "Graph.h"
+#include <iostream>
 using namespace std;
 
 Graph::Graph() {
-	matrix = nullptr;
+	adjMatrix = nullptr;
 }
 
 Graph::~Graph() {
-	if (matrix != nullptr) {
+	if (adjMatrix != nullptr) {
 		for (size_t i = 0; i < nodes.size(); i++) {
-			delete[] matrix[i];
+			delete[] adjMatrix[i];
 		}
-		delete[] matrix;
+		delete[] adjMatrix;
 	}
 
 	for (int i = 0; i < nodes.size(); i++) {
@@ -22,13 +22,21 @@ Graph::~Graph() {
 }
 
 void Graph::setStart(int x, int y) {
-	start->xPos = x;
-	start->yPos = y;
+	for (int i = 0; i < nodes.size(); i++) {
+		if (nodes[i]->xPos == x && nodes[i]->yPos == y) {
+			start = nodes[i];
+			break;
+		}
+	}
 }
 
 void Graph::setGoal(int x, int y) {
-	goal->xPos = x;
-	goal->yPos = y;
+	for (int i = 0; i < nodes.size(); i++) {
+		if (nodes[i]->xPos == x && nodes[i]->yPos == y) {
+			goal = nodes[i];
+			break;
+		}
+	}
 }
 
 
@@ -36,26 +44,76 @@ void Graph::aStar() {
 
 	reset();
 
-	openList.push_back(start);
+	//openList.push_back(start);
 	Vertex* current = nullptr;
 
+	for (int i = 0; i < nodes.size(); i++) {
+		openList.push_back(nodes[i]);
+	}
 
 	while (openList.front() != goal)
 	{
 		
 		Vertex* tempVert = getClosest();
+		//current = openList.front();
 		current = tempVert;
 
 		openList.pop_back();
 		closedList.push_back(current);
 
-		while (getUnivisited(current) != nullptr) {
+		Vertex* neighbor = getUnivisited(current);
 
-			Vertex* neighbor = getUnivisited(current);
+		while (neighbor != nullptr) {
+
+
 
 			int cost = current->lowestCost + neighbor->weight;
+			bool openTrue = false;
+			bool closedTrue = false;
+			int vectorIndex = NULL;
 
 
+			for (int i = 0; i < openList.size(); i++) {
+				if (openList[i] == neighbor) {
+					openTrue = true;
+					vectorIndex = i;
+					break;
+				}
+				else {
+					openTrue = false;
+				}
+			}
+			for (int i = 0; i < closedList.size(); i++) {
+				if (closedList[i] == neighbor) {
+					closedTrue = true;
+					vectorIndex = i;
+					break;
+				}
+				else {
+					closedTrue = false;
+				}
+			}
+
+			if (openTrue == true && cost < neighbor->lowestCost) {
+
+				openList.erase(openList.begin() + vectorIndex);
+
+			}
+			if (closedTrue == true && cost < neighbor->lowestCost) {
+
+				closedList.erase(closedList.begin() + vectorIndex);
+
+			}
+			if (openTrue == false && closedTrue == false) {
+
+				neighbor->lowestCost = cost;
+				openList.push_back(neighbor);
+				neighbor->prevVert = current;
+				current = neighbor;
+
+			}
+
+			break;
 		}
 
 	}
@@ -63,55 +121,137 @@ void Graph::aStar() {
 
 }
 
+void Graph::fillMatrix() {
+	
+	int size = nodes.size();
+
+	adjMatrix = new int* [size];
+	for (size_t i = 0; i < size; i++) {
+
+		adjMatrix[i] = new int[size];
+		for (size_t j = 0; j < size; j++) {
+			adjMatrix[i][j] = 0;
+		}
+
+	}
+
+}
+
 bool Graph::isAdjacent(int x, int y) {
-	return matrix[x][y] != 0;
+	return adjMatrix[x][y] != 0;
 }
 
 void Graph::AddNode(Vertex* node) {
 	nodes.push_back(node);
 }
 
-void Graph::AddEdge(int firstVert, int secondVert, int weight = 1) {
+void Graph::AddEdge(int firstVert, int secondVert, int weight) {
 
-	if (nodes.size() > 0) {
+	//add the connection for the two vertices to the adjacency matrix
+	//find the index of the first vert, then the index of the second vert, check these ont he adjacency matric, if it is a one they are adjacent, if not they are not  adjacent
+	
+	adjMatrix[firstVert][secondVert] = weight;
 
-			nodes[secondVert]->prevVert = nodes[firstVert];
-	}
+	//isAdjacent(firstVert, secondVert);
+
+
 
 }
 
 Vertex* Graph::getNode(int x, int y) {
+
 	for (int i = 0; i < nodes.size(); i++) {
 		if (nodes[i]->xPos == x && nodes[i]->yPos == y) {
 			return nodes[i];
+			break;
 		}
 	}
 }
 
 int Graph::getNodeIndex(int x, int y) {
-	
-	return matrix[x][y];
+
+	int nodeIndex = NULL;
+
+	for (int i = 0; i < nodes.size(); i++) {
+		if (nodes[i]->xPos == x && nodes[i]->yPos == y) {
+			nodeIndex = i;
+			break;
+		}
+
+	}
+
+	return nodeIndex;
 
 }
 
 
 Vertex* Graph::getUnivisited(Vertex* v) {
 
+	int x = v->xPos;
+	int size = nodes.size();
+	Vertex* unvisitedVert = nullptr;
+	
+
+	for (int i = 0; i < size; i++) {
+
+		if (adjMatrix[x][i] == 1) {
+			for (int j = 0; j < nodes.size(); j++) {
+
+				if (nodes[j]->xPos == x && nodes[j]->yPos == i && nodes[j]->visited == false) {
+
+					unvisitedVert = nodes[j];
+					nodes[j]->visited = true;
+					return unvisitedVert;
+				}
+
+			}
+		}
+
+	}
+
+	return unvisitedVert;
+
 }
 
 Vertex* Graph::getClosest() {
 	
+	Vertex* closestVert = nullptr;
+	int closest = INT_MAX;
+
+	for (int i = 0; i < openList.size(); i++) {
+		if (nodes[i]->heuristic < closest) {
+			closest = nodes[i]->heuristic;
+			closestVert = nodes[i];
+		}
+	}
+
+	return closestVert;
 }
 
-void Graph::removeVert(Vertex* v, bool open = true) {
+void Graph::removeVert(Vertex* v, bool open) {
 
-			openList.push_back(v);
+	openList.push_back(v);
 
 }
 
 
 
+void Graph::printNodes() {
 
+	if (nodes.size() > 0) {
+
+		cout << "nodes" << endl;
+		for (size_t i = 0; i < nodes.size(); i++) {
+			auto ptr = nodes[i];
+			cout << ptr->xPos << "," << ptr->yPos << " " << ptr->heuristic << endl;
+		}
+
+	}
+	else {
+		cout << "there are no nodes" << endl;
+	}
+
+}
 
 
 
@@ -124,7 +264,7 @@ void Graph::printMatrix() {
 		for (size_t i = 0; i < cnt; i++) {
 
 			for (size_t j = 0; j < cnt; j++) {
-				cout << matrix[i][j] << " ";
+				cout << adjMatrix[i][j] << " ";
 			}
 			cout << endl;
 		}

@@ -24,13 +24,33 @@ Graph graph;
 int mazeWidth;
 int mazeHeight;
 
+
 //return names of team members when called
 __declspec(dllexport) char* GetTeam() {
 	return (char*)"Chase Call";
 }
 
+void DeleteMaze() {
+
+	if (mazeData == nullptr) {
+		return;
+	}
+
+	for (size_t i = 0; i < mazeWidth; i++) {
+
+		delete[] mazeData[i];
+
+	}
+	delete[] mazeData;
+
+	mazeWidth = 0;
+	mazeHeight = 0;
+
+}
+
 //save the width, height, and data of the maze when called
 __declspec(dllexport) bool SetMaze(const int** data, int width, int height) {
+	cout << "starting SetMaze" << endl;
 
 	if (height <= 0 || width <= 0) {
 		return false;
@@ -49,14 +69,17 @@ __declspec(dllexport) bool SetMaze(const int** data, int width, int height) {
 			}
 
 		}
-
+		cout << "exiting SetMaze" << endl;
 		return true;
 	}
+
+
+
 }
 
 //set the height, width, and data form the DLL for the maze when called
 __declspec(dllexport) int** GetMaze(int& width, int& height) {
-	if (SetMaze == false) {
+	if (!SetMaze) {
 		return nullptr;
 	}
 	else {
@@ -69,6 +92,8 @@ __declspec(dllexport) int** GetMaze(int& width, int& height) {
 //return the next position when called
 __declspec(dllexport) bool GetNextPosition(int& xPos, int& yPos) {
 	
+	cout << "starting getNextPosition" << endl;
+
 	for (size_t i = 0; i < mazeWidth; i++) {
 
 		for (size_t j = 0; j < mazeHeight; j++) {
@@ -78,7 +103,8 @@ __declspec(dllexport) bool GetNextPosition(int& xPos, int& yPos) {
 				Vertex* tempNode = new Vertex;
 				tempNode->xPos = i;
 				tempNode->yPos = j;
-				tempNode->heuristic = abs((int)(endX - 1)) + abs((int)(endY - 1));
+				tempNode->heuristic = abs((int)(endX - i)) + abs((int)(endY - j));
+				tempNode->visited = false;
 
 				if (mazeData[i][j] == 0) {
 					tempNode->weight = 1;
@@ -87,6 +113,7 @@ __declspec(dllexport) bool GetNextPosition(int& xPos, int& yPos) {
 					tempNode->weight = mazeData[i][j];
 				}
 
+				tempNode->prevVert = nullptr;
 				tempNode->lowestCost = INT_MAX;
 				graph.AddNode(tempNode);
 
@@ -96,6 +123,8 @@ __declspec(dllexport) bool GetNextPosition(int& xPos, int& yPos) {
 
 	}
 
+	graph.fillMatrix();
+	graph.printNodes();
 
 	for (size_t i = 0; i < mazeWidth; i++) {
 
@@ -104,26 +133,30 @@ __declspec(dllexport) bool GetNextPosition(int& xPos, int& yPos) {
 			if (mazeData[i][j] != 1) {
 
 				int firstPoint = graph.getNodeIndex(i, j);
+				int lowX = i - 1;
+				int lowY = j - 1;
+
 
 				//4 regular directions
-				if (i - 1 >= 0 && mazeData[i - 1][j] != 1) {
+				//access violation reading location
+				if (lowX >= 0 && mazeData[i - 1][j] != 1) {
 					int secondPoint = graph.getNodeIndex(i - 1, j);
 					graph.AddEdge(firstPoint, secondPoint, graph.getNode(i-1, j)->weight);
 				}
-				if (i + 1 >= 0 && mazeData[i + 1][j] != 1) {
+				if (i + 1 < mazeWidth && mazeData[i + 1][j] != 1) {
 					int secondPoint = graph.getNodeIndex(i + 1, j);
 					graph.AddEdge(firstPoint, secondPoint, graph.getNode(i + 1, j)->weight);
 				}
-				if (i - 1 >= 0 && mazeData[i][j - 1] != 1) {
+				if (lowY >= 0 && mazeData[i][j - 1] != 1) {
 					int secondPoint = graph.getNodeIndex(i, j - 1);
 					graph.AddEdge(firstPoint, secondPoint, graph.getNode(i, j - 1)->weight);
 				}
-				if (i - 1 >= 0 && mazeData[i][j + 1] != 1) {
+				if (j + 1 < mazeHeight && mazeData[i][j + 1] != 1) {
 					int secondPoint = graph.getNodeIndex(i, j + 1);
 					graph.AddEdge(firstPoint, secondPoint, graph.getNode(i, j + 1)->weight);
 				}
 
-				//4 diagonal directions
+				/*//4 diagonal directions
 				if (i - 1 >= 0 && mazeData[i + 1][j + 1] != 1) {
 					int secondPoint = graph.getNodeIndex(i + 1, j + 1);
 					graph.AddEdge(firstPoint, secondPoint, graph.getNode(i + 1, j + 1)->weight);
@@ -139,7 +172,7 @@ __declspec(dllexport) bool GetNextPosition(int& xPos, int& yPos) {
 				if (i - 1 >= 0 && mazeData[i - 1][j - 1] != 1) {
 					int secondPoint = graph.getNodeIndex(i - 1, j - 1);
 					graph.AddEdge(firstPoint, secondPoint, graph.getNode(i - 1, j - 1)->weight);
-				}
+				}*/
 
 			}
 
@@ -163,16 +196,19 @@ __declspec(dllexport) bool GetNextPosition(int& xPos, int& yPos) {
 
 	}
 
-	xPos = xList[currentPos];
+	/*xPos = xList[currentPos];
 	yPos = yList[currentPos];
 	currentPos++;
-	currentPos++;
+	currentPos++;*/
 
+	cout << "exitting getNextPosition" << endl;
 	return true;
+
 }
 
 //save the x and y start position when called
 __declspec(dllexport) bool SetStart(int xPos, int yPos) {
+	cout << "starting setStart" << endl;
 
 	if (xPos < 0 || yPos < 0) {
 		return false;
@@ -180,6 +216,8 @@ __declspec(dllexport) bool SetStart(int xPos, int yPos) {
 	else {
 		startX = xPos;
 		startY = yPos;
+		cout << startX << "," << startY << endl;
+		cout << "exiting setStart" << endl;
 		return true;
 	}
 }
@@ -187,7 +225,7 @@ __declspec(dllexport) bool SetStart(int xPos, int yPos) {
 //set the x and y position of the start when called
 __declspec(dllexport) bool GetStart(int& xPos, int& yPos) {
 
-	if (SetStart == false) {
+	if (!SetStart) {
 		return false;
 	}
 	else {
@@ -208,21 +246,20 @@ __declspec(dllexport) bool GetStart(int& xPos, int& yPos) {
 
 //save the x and y end position when called
 __declspec(dllexport) bool SetEnd(int xPos, int yPos) {
+	cout << "starting setEnd" << endl;
 
-	if (xPos < 0 || yPos < 0) {
-		return false;
-	}
-	else {
 		endX = xPos;
 		endY = yPos;
+		cout << endX << "," << endY << endl;
+		cout << "exiting setEnd" << endl;
 		return true;
-	}
+
 }
 
 //set the x and y end position when called
 __declspec(dllexport) bool GetEnd(int& xPos, int& yPos) {
 
-	if (SetEnd == false) {
+	/*if (SetEnd == false) {
 		return false;
 	}
 	else {
@@ -232,12 +269,12 @@ __declspec(dllexport) bool GetEnd(int& xPos, int& yPos) {
 			return false;
 		}
 		else
-		{
+		{*/
 			xPos = endX;
 			yPos = endY;
 			return true;
-		}
-	}
+		
+	
 }
 
 __declspec(dllexport) bool Restart() {

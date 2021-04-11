@@ -22,6 +22,8 @@ public:
 	bool isAdjacent(int x, int y);
 
 	void printMatrix();
+	void printNodes();
+	void fillMatrix();
 
 	Vertex* goal;
 
@@ -29,9 +31,10 @@ private:
 	vector<Vertex*> nodes;
 	vector<Vertex*> closedList;
 	vector<Vertex*> openList;
+	
 	Vertex* start;
 	Vertex* current;
-	int** matrix;
+	int** adjMatrix;
 
 
 	Vertex* getUnivisited(Vertex* v);
