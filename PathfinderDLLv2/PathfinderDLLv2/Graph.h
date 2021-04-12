@@ -14,6 +14,7 @@ public:
 	void AddNode(Vertex* node);
 	void AddEdge(int firstVert, int secondVert, int weight = 1);
 	int getNodeIndex(int x, int y);
+	int openIndex(Vertex* node);
 	Vertex* getNode(int x, int y);
 
 	void setStart(int x, int y);

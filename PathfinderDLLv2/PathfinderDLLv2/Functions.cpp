@@ -15,14 +15,13 @@ int startX;
 int startY;
 int endX;
 int endY;
-int xList[];
-int yList[];
 vector<Point> step;
 int currentPos = 0;
 int** mazeData;
 Graph graph;
 int mazeWidth;
 int mazeHeight;
+bool init = false;
 
 
 //return names of team members when called
@@ -89,103 +88,115 @@ __declspec(dllexport) int** GetMaze(int& width, int& height) {
 	}
 }
 
+__declspec(dllexport) bool Restart() {
+
+	currentPos = 0;
+	return true;
+
+}
+
 //return the next position when called
 __declspec(dllexport) bool GetNextPosition(int& xPos, int& yPos) {
 	
 	cout << "starting getNextPosition" << endl;
 
-	for (size_t i = 0; i < mazeWidth; i++) {
+	if (init == false) {
 
-		for (size_t j = 0; j < mazeHeight; j++) {
-		
-			if (mazeData[i][j] != 1) {
+		for (size_t i = 0; i < mazeWidth; i++) {
 
-				Vertex* tempNode = new Vertex;
-				tempNode->xPos = i;
-				tempNode->yPos = j;
-				tempNode->heuristic = abs((int)(endX - i)) + abs((int)(endY - j));
-				tempNode->visited = false;
+			for (size_t j = 0; j < mazeHeight; j++) {
 
-				if (mazeData[i][j] == 0) {
-					tempNode->weight = 1;
+				if (mazeData[i][j] != 1) {
+
+					Vertex* tempNode = new Vertex;
+					tempNode->xPos = i;
+					tempNode->yPos = j;
+					tempNode->heuristic = abs((int)(endX - i)) + abs((int)(endY - j));
+					tempNode->visited = false;
+
+					if (mazeData[i][j] == 0) {
+						tempNode->weight = 1;
+					}
+					else {
+						tempNode->weight = mazeData[i][j];
+					}
+
+					tempNode->prevVert = nullptr;
+					tempNode->lowestCost = INT_MAX;
+					graph.AddNode(tempNode);
+
 				}
-				else {
-					tempNode->weight = mazeData[i][j];
-				}
-
-				tempNode->prevVert = nullptr;
-				tempNode->lowestCost = INT_MAX;
-				graph.AddNode(tempNode);
 
 			}
 
 		}
 
-	}
+		graph.fillMatrix();
+		graph.printNodes();
 
-	graph.fillMatrix();
-	graph.printNodes();
+		for (size_t i = 0; i < mazeWidth; i++) {
 
-	for (size_t i = 0; i < mazeWidth; i++) {
+			for (size_t j = 0; j < mazeHeight; j++) {
 
-		for (size_t j = 0; j < mazeHeight; j++) {
+				if (mazeData[i][j] != 1) {
 
-			if (mazeData[i][j] != 1) {
-
-				int firstPoint = graph.getNodeIndex(i, j);
-				int lowX = i - 1;
-				int lowY = j - 1;
+					int firstPoint = graph.getNodeIndex(i, j);
+					int lowX = i - 1;
+					int lowY = j - 1;
 
 
-				//4 regular directions
-				//access violation reading location
-				if (lowX >= 0 && mazeData[i - 1][j] != 1) {
-					int secondPoint = graph.getNodeIndex(i - 1, j);
-					graph.AddEdge(firstPoint, secondPoint, graph.getNode(i-1, j)->weight);
+					//4 regular directions
+					//access violation reading location
+					if (lowX >= 0 && mazeData[i - 1][j] != 1) {
+						int secondPoint = graph.getNodeIndex(i - 1, j);
+						graph.AddEdge(firstPoint, secondPoint, graph.getNode(i - 1, j)->weight);
+					}
+					if (i + 1 < mazeWidth && mazeData[i + 1][j] != 1) {
+						int secondPoint = graph.getNodeIndex(i + 1, j);
+						graph.AddEdge(firstPoint, secondPoint, graph.getNode(i + 1, j)->weight);
+					}
+					if (lowY >= 0 && mazeData[i][j - 1] != 1) {
+						int secondPoint = graph.getNodeIndex(i, j - 1);
+						graph.AddEdge(firstPoint, secondPoint, graph.getNode(i, j - 1)->weight);
+					}
+					if (j + 1 < mazeHeight && mazeData[i][j + 1] != 1) {
+						int secondPoint = graph.getNodeIndex(i, j + 1);
+						graph.AddEdge(firstPoint, secondPoint, graph.getNode(i, j + 1)->weight);
+					}
+
+
 				}
-				if (i + 1 < mazeWidth && mazeData[i + 1][j] != 1) {
-					int secondPoint = graph.getNodeIndex(i + 1, j);
-					graph.AddEdge(firstPoint, secondPoint, graph.getNode(i + 1, j)->weight);
-				}
-				if (lowY >= 0 && mazeData[i][j - 1] != 1) {
-					int secondPoint = graph.getNodeIndex(i, j - 1);
-					graph.AddEdge(firstPoint, secondPoint, graph.getNode(i, j - 1)->weight);
-				}
-				if (j + 1 < mazeHeight && mazeData[i][j + 1] != 1) {
-					int secondPoint = graph.getNodeIndex(i, j + 1);
-					graph.AddEdge(firstPoint, secondPoint, graph.getNode(i, j + 1)->weight);
-				}
-
 
 			}
 
 		}
+		//graph.printMatrix();
+		graph.setStart(startX, startY);
+		graph.setGoal(endX, endY);
 
-	}
-	graph.printMatrix();
-	graph.setStart(startX, startY);
-	graph.setGoal(endX, endY);
+		graph.aStar();
 
-	graph.aStar();
+		Vertex* goalVert = graph.goal;
+		while (goalVert != nullptr) {
 
-	Vertex* goalVert = graph.goal;
-	while (goalVert != nullptr) {
+			Point stp;
+			stp.x = goalVert->xPos;
+			stp.y = goalVert->yPos;
+			step.insert(step.begin(), stp);
+			goalVert = goalVert->prevVert;
 
-		Point stp;
-		stp.x = goalVert->xPos;
-		stp.y = goalVert->yPos;
-		step.insert(step.begin(), stp);
-		goalVert = goalVert->prevVert;
-
+		}
+		init = true;
 	}
 
 	xPos = step[currentPos].x;
+	cout << step[currentPos].x << " " << step[currentPos].y << endl;
 	yPos = step[currentPos].y;
 	currentPos++;
 
-	/*if (currentPos >= step.size()) {
+	if (currentPos >= step.size()) {
 		Restart();
-	}*/
+	}
 
 	cout << "exitting getNextPosition" << endl;
 	return true;
@@ -253,9 +264,3 @@ __declspec(dllexport) bool GetEnd(int& xPos, int& yPos) {
 	
 }
 
-__declspec(dllexport) bool Restart() {
-
-	currentPos = 0;
-	return true;
-
-}

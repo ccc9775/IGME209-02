@@ -39,6 +39,18 @@ void Graph::setGoal(int x, int y) {
 	}
 }
 
+int Graph::openIndex(Vertex* node) {
+
+	int indexNum = -1;
+
+	for (size_t i = 0; i < openList.size(); i++) {
+		if (openList[i] == node) {
+			indexNum = i;
+			break;
+		}
+	}
+	return indexNum;
+}
 
 void Graph::aStar() {
 
@@ -48,18 +60,26 @@ void Graph::aStar() {
 	//openList.push_back(start);
 	Vertex* current = nullptr;
 
-	for (int i = 0; i < nodes.size(); i++) {
+	/*for (int i = 0; i < nodes.size(); i++) {
 		openList.push_back(nodes[i]);
-	}
+	}*/
 
-	while (openList.front() != goal)
+	openList.push_back(start);
+	start->lowestCost = 0;
+	start->visited = true;
+
+	Vertex* tempVert = getClosest();
+	//current = openList.front();
+	current = tempVert;
+
+	while (!openList.empty() && openList.front() != goal)
 	{
 		
-		Vertex* tempVert = getClosest();
-		//current = openList.front();
-		current = tempVert;
+		//not node index, need to find it within the open list
+		
 
-		openList.erase(openList.begin() + getNodeIndex(current->xPos, current->yPos));
+
+		openList.erase(openList.begin() + openIndex(current));
 		closedList.push_back(current);
 
 		Vertex* neighbor = getUnivisited(current);
@@ -69,11 +89,10 @@ void Graph::aStar() {
 			if (neighbor == goal) {
 				openList.push_back(neighbor);
 				neighbor->prevVert = current;
-				current = neighbor;
 				break;
 			}
 
-			int cost = current->weight + current->heuristic + neighbor->weight;
+			int cost = current->lowestCost + current->heuristic + neighbor->weight;
 			bool openTrue = false;
 			bool closedTrue = false;
 			int vectorIndex = NULL;
@@ -103,11 +122,12 @@ void Graph::aStar() {
 			if (openTrue == true && cost < neighbor->heuristic + neighbor->weight) {
 
 				openList.erase(openList.begin() + vectorIndex);
-
+				openTrue = false;
 			}
 			if (closedTrue == true && cost < neighbor->heuristic + neighbor->weight) {
 
 				closedList.erase(closedList.begin() + vectorIndex);
+				closedTrue = false;
 
 			}
 			if (openTrue == false && closedTrue == false) {
@@ -115,12 +135,15 @@ void Graph::aStar() {
 				neighbor->lowestCost = cost;
 				openList.push_back(neighbor);
 				neighbor->prevVert = current;
-				current = neighbor;
 
 			}
 
 			neighbor = getUnivisited(current);
 		}
+
+		Vertex* tempVert = getClosest();
+		//current = openList.front();
+		current = tempVert;
 
 	}
 
@@ -193,24 +216,24 @@ int Graph::getNodeIndex(int x, int y) {
 
 Vertex* Graph::getUnivisited(Vertex* v) {
 
-	int x = v->xPos;
+	int x = getNodeIndex(v->xPos, v->yPos);
 	int size = nodes.size();
 	Vertex* unvisitedVert = nullptr;
 	
 
 	for (int i = 0; i < size; i++) {
 
-		if (adjMatrix[x][i] == 1) {
-			for (int j = 0; j < nodes.size(); j++) {
+		if (adjMatrix[x][i] == 1 && nodes[i]->visited == false) {
+			
 
-				if (nodes[j]->xPos == x && nodes[j]->yPos == i && nodes[j]->visited == false) {
+				
 
-					unvisitedVert = nodes[j];
-					nodes[j]->visited = true;
+					unvisitedVert = nodes[i];
+					nodes[i]->visited = true;
 					return unvisitedVert;
-				}
+				
 
-			}
+			
 		}
 
 	}
@@ -225,9 +248,9 @@ Vertex* Graph::getClosest() {
 	int closest = -1;
 
 	for (int i = 0; i < openList.size(); i++) {
-		if (nodes[i]->heuristic > closest) {
-			closest = nodes[i]->heuristic;
-			closestVert = nodes[i];
+		if (openList[i]->heuristic > closest) {
+			closest = openList[i]->heuristic;
+			closestVert = openList[i];
 		}
 	}
 
