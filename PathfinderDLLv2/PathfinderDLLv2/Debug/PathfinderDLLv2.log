@@ -1,17 +1,30 @@
-﻿  Graph.cpp
+﻿  Functions.cpp
+C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Functions.cpp(39,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Functions.cpp(64,24): warning C4018: '<': signed/unsigned mismatch
+C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Functions.cpp(67,25): warning C4018: '<': signed/unsigned mismatch
+C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Functions.cpp(82,14): warning C4551: function call missing argument list
+C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Functions.cpp(97,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Functions.cpp(99,24): warning C4018: '<': signed/unsigned mismatch
+C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Functions.cpp(129,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Functions.cpp(131,24): warning C4018: '<': signed/unsigned mismatch
+C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Functions.cpp(146,15): warning C4018: '<': signed/unsigned mismatch
+C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Functions.cpp(154,15): warning C4018: '<': signed/unsigned mismatch
+C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Functions.cpp(214,15): warning C4551: function call missing argument list
+  Graph.cpp
 C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Graph.cpp(18,20): warning C4018: '<': signed/unsigned mismatch
 C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Graph.cpp(25,20): warning C4018: '<': signed/unsigned mismatch
 C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Graph.cpp(34,20): warning C4018: '<': signed/unsigned mismatch
 C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Graph.cpp(51,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Graph.cpp(85,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Graph.cpp(95,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Graph.cpp(138,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Graph.cpp(141,24): warning C4018: '<': signed/unsigned mismatch
-C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Graph.cpp(172,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Graph.cpp(184,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Graph.cpp(207,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Graph.cpp(230,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Graph.cpp(273,24): warning C4018: '<': signed/unsigned mismatch
-C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Graph.cpp(275,25): warning C4018: '<': signed/unsigned mismatch
-C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Graph.cpp(178): warning C4715: 'Graph::getNode': not all control paths return a value
+C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Graph.cpp(82,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Graph.cpp(92,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Graph.cpp(135,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Graph.cpp(138,24): warning C4018: '<': signed/unsigned mismatch
+C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Graph.cpp(169,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Graph.cpp(181,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Graph.cpp(204,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Graph.cpp(227,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Graph.cpp(270,24): warning C4018: '<': signed/unsigned mismatch
+C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Graph.cpp(272,25): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\PathfinderDLLv2\Graph.cpp(175): warning C4715: 'Graph::getNode': not all control paths return a value
   PathfinderDLLv2.vcxproj -> C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\Debug\MyDLL.dll

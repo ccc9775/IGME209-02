@@ -4,13 +4,14 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 __declspec(dllimport) char* GetTeam();
-__declspec(dllimport) void SetMaze(const int** data, int width, int height);
+__declspec(dllimport) bool SetMaze(const int** data, int width, int height);
 __declspec(dllimport) int** GetMaze(int& width, int& height);
-__declspec(dllimport) void GetNextPosition(int& xPos, int& yPos);
-__declspec(dllimport) void SetStart(int xPos, int yPos);
-__declspec(dllimport) void GetStart(int& xPos, int& yPos);
-__declspec(dllimport) void SetEnd(int xPos, int yPos);
-__declspec(dllimport) void GetEnd(int& xPos, int& yPos);
+__declspec(dllimport) bool GetNextPosition(int& xPos, int& yPos);
+__declspec(dllimport) bool SetStart(int xPos, int yPos);
+__declspec(dllimport) bool GetStart(int& xPos, int& yPos);
+__declspec(dllimport) bool SetEnd(int xPos, int yPos);
+__declspec(dllimport) bool GetEnd(int& xPos, int& yPos);
+__declspec(dllimport) bool Restart();
 
 namespace Part2UnitTests
 {

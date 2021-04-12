@@ -1,7 +1,3 @@
-﻿     Creating library C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\Debug\Part2UnitTests.lib and object C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\Debug\Part2UnitTests.exp
-Part2UnitTests.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) void __cdecl SetMaze(int const * *,int,int)" (__imp_?SetMaze@@YAXPAPBHHH@Z) referenced in function "public: void __thiscall Part2UnitTests::Part2UnitTests::TestSetMaze(void)" (?TestSetMaze@Part2UnitTests@1@QAEXXZ)
-Part2UnitTests.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) void __cdecl SetStart(int,int)" (__imp_?SetStart@@YAXHH@Z) referenced in function "public: void __thiscall Part2UnitTests::Part2UnitTests::TestSetStart(void)" (?TestSetStart@Part2UnitTests@1@QAEXXZ)
-Part2UnitTests.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) void __cdecl GetStart(int &,int &)" (__imp_?GetStart@@YAXAAH0@Z) referenced in function "public: void __thiscall Part2UnitTests::Part2UnitTests::TestGetStart(void)" (?TestGetStart@Part2UnitTests@1@QAEXXZ)
-Part2UnitTests.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) void __cdecl SetEnd(int,int)" (__imp_?SetEnd@@YAXHH@Z) referenced in function "public: void __thiscall Part2UnitTests::Part2UnitTests::TestSetEnd(void)" (?TestSetEnd@Part2UnitTests@1@QAEXXZ)
-Part2UnitTests.obj : error LNK2019: unresolved external symbol "__declspec(dllimport) void __cdecl GetEnd(int &,int &)" (__imp_?GetEnd@@YAXAAH0@Z) referenced in function "public: void __thiscall Part2UnitTests::Part2UnitTests::TestGetEnd(void)" (?TestGetEnd@Part2UnitTests@1@QAEXXZ)
-C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\Debug\Part2UnitTests.dll : fatal error LNK1120: 5 unresolved externals
+﻿  Part2UnitTests.cpp
+     Creating library C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\Debug\Part2UnitTests.lib and object C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\Debug\Part2UnitTests.exp
+  Part2UnitTests.vcxproj -> C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\Debug\Part2UnitTests.dll

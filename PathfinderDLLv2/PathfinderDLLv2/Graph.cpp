@@ -60,21 +60,18 @@ void Graph::aStar() {
 		current = tempVert;
 
 		openList.erase(openList.begin() + getNodeIndex(current->xPos, current->yPos));
-
-		//currently removes the top node, don't want that
-		//openList.pop_back();
 		closedList.push_back(current);
 
 		Vertex* neighbor = getUnivisited(current);
 
 		while (neighbor != nullptr) {
 
-			/*if (neighbor == goal) {
+			if (neighbor == goal) {
 				openList.push_back(neighbor);
 				neighbor->prevVert = current;
 				current = neighbor;
 				break;
-			}*/
+			}
 
 			int cost = current->weight + current->heuristic + neighbor->weight;
 			bool openTrue = false;

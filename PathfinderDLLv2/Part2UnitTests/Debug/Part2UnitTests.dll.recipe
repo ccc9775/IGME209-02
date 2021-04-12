@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\Debug\PathfinderDLLv2.dll</FullPath>
+      <FullPath>C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\Debug\MyDLL.dll</FullPath>
     </ProjectOutput>
     <ProjectOutput>
       <FullPath>C:\Users\callc\source\repos\IGME209-02\PathfinderDLLv2\Debug\Part2UnitTests.dll</FullPath>

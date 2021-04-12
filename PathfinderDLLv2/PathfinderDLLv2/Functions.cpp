@@ -156,23 +156,6 @@ __declspec(dllexport) bool GetNextPosition(int& xPos, int& yPos) {
 					graph.AddEdge(firstPoint, secondPoint, graph.getNode(i, j + 1)->weight);
 				}
 
-				/*//4 diagonal directions
-				if (i - 1 >= 0 && mazeData[i + 1][j + 1] != 1) {
-					int secondPoint = graph.getNodeIndex(i + 1, j + 1);
-					graph.AddEdge(firstPoint, secondPoint, graph.getNode(i + 1, j + 1)->weight);
-				}
-				if (i - 1 >= 0 && mazeData[i - 1][j + 1] != 1) {
-					int secondPoint = graph.getNodeIndex(i - 1, j + 1);
-					graph.AddEdge(firstPoint, secondPoint, graph.getNode(i - 1, j + 1)->weight);
-				}
-				if (i - 1 >= 0 && mazeData[i + 1][j - 1] != 1) {
-					int secondPoint = graph.getNodeIndex(i + 1, j - 1);
-					graph.AddEdge(firstPoint, secondPoint, graph.getNode(i + 1, j - 1)->weight);
-				}
-				if (i - 1 >= 0 && mazeData[i - 1][j - 1] != 1) {
-					int secondPoint = graph.getNodeIndex(i - 1, j - 1);
-					graph.AddEdge(firstPoint, secondPoint, graph.getNode(i - 1, j - 1)->weight);
-				}*/
 
 			}
 
@@ -262,17 +245,7 @@ __declspec(dllexport) bool SetEnd(int xPos, int yPos) {
 //set the x and y end position when called
 __declspec(dllexport) bool GetEnd(int& xPos, int& yPos) {
 
-	/*if (SetEnd == false) {
-		return false;
-	}
-	else {
-		if (endX == NULL && endY == NULL) {
-			xPos = -1;
-			yPos = -1;
-			return false;
-		}
-		else
-		{*/
+
 			xPos = endX;
 			yPos = endY;
 			return true;
