@@ -44,6 +44,7 @@ void Graph::aStar() {
 
 	reset();
 
+
 	//openList.push_back(start);
 	Vertex* current = nullptr;
 
@@ -58,16 +59,24 @@ void Graph::aStar() {
 		//current = openList.front();
 		current = tempVert;
 
-		openList.pop_back();
+		openList.erase(openList.begin() + getNodeIndex(current->xPos, current->yPos));
+
+		//currently removes the top node, don't want that
+		//openList.pop_back();
 		closedList.push_back(current);
 
 		Vertex* neighbor = getUnivisited(current);
 
 		while (neighbor != nullptr) {
 
+			/*if (neighbor == goal) {
+				openList.push_back(neighbor);
+				neighbor->prevVert = current;
+				current = neighbor;
+				break;
+			}*/
 
-
-			int cost = current->lowestCost + neighbor->weight;
+			int cost = current->weight + current->heuristic + neighbor->weight;
 			bool openTrue = false;
 			bool closedTrue = false;
 			int vectorIndex = NULL;
@@ -94,12 +103,12 @@ void Graph::aStar() {
 				}
 			}
 
-			if (openTrue == true && cost < neighbor->lowestCost) {
+			if (openTrue == true && cost < neighbor->heuristic + neighbor->weight) {
 
 				openList.erase(openList.begin() + vectorIndex);
 
 			}
-			if (closedTrue == true && cost < neighbor->lowestCost) {
+			if (closedTrue == true && cost < neighbor->heuristic + neighbor->weight) {
 
 				closedList.erase(closedList.begin() + vectorIndex);
 
@@ -113,7 +122,7 @@ void Graph::aStar() {
 
 			}
 
-			break;
+			neighbor = getUnivisited(current);
 		}
 
 	}
@@ -216,10 +225,10 @@ Vertex* Graph::getUnivisited(Vertex* v) {
 Vertex* Graph::getClosest() {
 	
 	Vertex* closestVert = nullptr;
-	int closest = INT_MAX;
+	int closest = -1;
 
 	for (int i = 0; i < openList.size(); i++) {
-		if (nodes[i]->heuristic < closest) {
+		if (nodes[i]->heuristic > closest) {
 			closest = nodes[i]->heuristic;
 			closestVert = nodes[i];
 		}

@@ -196,10 +196,13 @@ __declspec(dllexport) bool GetNextPosition(int& xPos, int& yPos) {
 
 	}
 
-	/*xPos = xList[currentPos];
-	yPos = yList[currentPos];
+	xPos = step[currentPos].x;
+	yPos = step[currentPos].y;
 	currentPos++;
-	currentPos++;*/
+
+	/*if (currentPos >= step.size()) {
+		Restart();
+	}*/
 
 	cout << "exitting getNextPosition" << endl;
 	return true;
