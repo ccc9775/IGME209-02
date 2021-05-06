@@ -160,6 +160,24 @@ extern "C" __declspec(dllexport) bool GetNextPosition(int& xPos, int& yPos) {
 						graph.AddEdge(firstPoint, secondPoint, graph.getNode(i, j + 1)->weight);
 					}
 
+					//added edges to enable diagonal movement
+					if (i + 1 < mazeWidth && j + 1 < mazeHeight && mazeData[i + 1][j + 1] != 0) {
+						int secondPoint = graph.getNodeIndex(i + 1, j + 1);
+						graph.AddEdge(firstPoint, secondPoint, graph.getNode(i + 1, j + 1)->weight);
+					}
+					if (lowX >= 0 && lowY >= 0 && mazeData[i - 1][j - 1] != 0) {
+						int secondPoint = graph.getNodeIndex(i - 1, j - 1);
+						graph.AddEdge(firstPoint, secondPoint, graph.getNode(i - 1, j - 1)->weight);
+					}
+					if (lowX >= 0 && j + 1 < mazeHeight && mazeData[i - 1][j + 1] != 0) {
+						int secondPoint = graph.getNodeIndex(i - 1, j + 1);
+						graph.AddEdge(firstPoint, secondPoint, graph.getNode(i - 1, j + 1)->weight);
+					}
+					if (i + 1 < mazeWidth && lowY >= 0 && mazeData[i + 1][j - 1] != 0) {
+						int secondPoint = graph.getNodeIndex(i + 1, j - 1);
+						graph.AddEdge(firstPoint, secondPoint, graph.getNode(i + 1, j - 1)->weight);
+					}
+
 				}
 
 			}
