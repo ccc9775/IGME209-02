@@ -26,7 +26,9 @@ public:
 	void Print();
 	bool IsEmpty();
 	void Push(T data);
+	void PushFirst(T data);
 	void Pop();
+	void PopLast();
 
 private:
 	int count;
@@ -34,6 +36,7 @@ private:
 	struct Node {
 		T info;
 		Node* next;
+		Node* prev;
 	};
 
 	Node* first;
@@ -92,8 +95,26 @@ void Queue<T>::Push(T data) {
 	}
 	else {
 		last->next = newNode;
+		newNode->prev = last;
 	}
 	last = newNode;
+	count++;
+}
+
+template<class T>
+void Queue<T>::PushFirst(T data) {
+	Node* newNode = new Node;
+	newNode->info = data;
+	newNode->next = NULL;
+
+	if (IsEmpty()) {
+		first = newNode;
+	}
+	else {
+		newNode->next = first;
+		first->prev = newNode;
+	}
+	first = newNode;
 	count++;
 }
 
@@ -110,6 +131,29 @@ void Queue<T>::Pop() {
 		}
 		else {
 			first = first->next;
+			/*Node* newFirst = first->next;
+			newFirst->prev = NULL;*/
+			first->prev = NULL;
+		}
+		delete tempNode;
+		count--;
+	}
+}
+
+template<class T>
+void Queue<T>::PopLast() {
+	if (IsEmpty()) {
+		cout << "The Queue is empty" << endl;
+	}
+	else {
+		Node* tempNode = last;
+		if (first == last) {
+			first = NULL;
+			last = NULL;
+		}
+		else {
+			last = last->prev;
+			last->next = NULL;
 		}
 		delete tempNode;
 		count--;
