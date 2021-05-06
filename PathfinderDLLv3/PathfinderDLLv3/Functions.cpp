@@ -143,7 +143,6 @@ extern "C" __declspec(dllexport) bool GetNextPosition(int& xPos, int& yPos) {
 
 
 					//4 regular directions
-					//access violation reading location
 					if (lowX >= 0 && mazeData[i - 1][j] != 0) {
 						int secondPoint = graph.getNodeIndex(i - 1, j);
 						graph.AddEdge(firstPoint, secondPoint, graph.getNode(i - 1, j)->weight);
@@ -160,7 +159,6 @@ extern "C" __declspec(dllexport) bool GetNextPosition(int& xPos, int& yPos) {
 						int secondPoint = graph.getNodeIndex(i, j + 1);
 						graph.AddEdge(firstPoint, secondPoint, graph.getNode(i, j + 1)->weight);
 					}
-
 
 				}
 
